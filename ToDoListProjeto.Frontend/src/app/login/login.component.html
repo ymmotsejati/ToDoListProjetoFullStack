@@ -5,19 +5,24 @@
       <mat-card-title>Login</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <form (ngSubmit)="login()">
-        <mat-form-field appearance="fill">
-          <mat-label>Email</mat-label>
-          <input matInput type="email" [(ngModel)]="loginData.email" name="email" required>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>Senha</mat-label>
-          <input matInput type="password" [(ngModel)]="loginData.password" name="password" required>
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">Login</button>
-        <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
-        <p>Não tem uma conta? <a routerLink="/register">Registre-se</a></p>
-      </form>
+    <form (ngSubmit)="login()" #loginForm="ngForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" name="email" [(ngModel)]="loginData.email" required email #email="ngModel">
+        <mat-error *ngIf="email.errors?.['required']">O email é obrigatório.</mat-error>
+        <mat-error *ngIf="email.errors?.['email']">Formato de email inválido.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input matInput type="password" name="password" [(ngModel)]="loginData.password" required #password="ngModel">
+        <mat-error *ngIf="password.errors?.['required']">A senha é obrigatória.</mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+      <a mat-button routerLink="/register">Não tem uma conta? Registre-se</a>
+    </form>
     </mat-card-content>
   </mat-card>
 

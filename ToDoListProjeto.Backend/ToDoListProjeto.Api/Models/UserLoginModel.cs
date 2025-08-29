@@ -1,8 +1,14 @@
-﻿namespace ToDoListProjeto.Api.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ToDoListProjeto.Api.Models
 {
     public class UserLoginModel
     {
+        [Required(ErrorMessage = "O email é obrigatório.")]
+        [EmailAddress(ErrorMessage = "O formato do email é inválido.")]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "A senha é obrigatória.")]
         public string Password { get; set; }
     }
 }

@@ -5,28 +5,37 @@
     </mat-card-header>
 
     <mat-card-content>
-      <form (ngSubmit)="register()">
+      <form (ngSubmit)="register()" #registerForm="ngForm">
         <mat-form-field appearance="outline">
           <mat-label>Nome</mat-label>
-          <input matInput type="text" id="name" name="name" [(ngModel)]="registerData.name" required>
+          <input matInput name="name" [(ngModel)]="registerData.name" required minlength="2" #name="ngModel">
+          <mat-error *ngIf="name.errors?.['required']">O nome é obrigatório.</mat-error>
+          <mat-error *ngIf="name.errors?.['minlength']">O nome deve ter no mínimo 2 caracteres.</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-          <input matInput type="email" id="email" name="email" [(ngModel)]="registerData.email" required>
+          <input matInput type="email" name="email" [(ngModel)]="registerData.email" required email #email="ngModel">
+          <mat-error *ngIf="email.errors?.['required']">O email é obrigatório.</mat-error>
+          <mat-error *ngIf="email.errors?.['email']">Formato de email inválido.</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Senha</mat-label>
-          <input matInput type="password" id="password" name="password" [(ngModel)]="registerData.password" required>
-        </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Senha</mat-label>
+            <input matInput type="password" name="password" 
+                  [(ngModel)]="registerData.password" 
+                  required minlength="8" 
+                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                  #password="ngModel">
+            
+            <mat-error *ngIf="password.errors?.['required']">A senha é obrigatória.</mat-error>
+            <mat-error *ngIf="password.errors?.['minlength']">A senha deve ter no mínimo 8 caracteres.</mat-error>
+            <mat-error *ngIf="password.errors?.['pattern']">Deve conter maiúscula, minúscula, número e símbolo (&#64;$!%*?&).</mat-error>
+          </mat-form-field>
 
+        <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Registrar</button>
         <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
-
-        <mat-card-actions class="form-actions">
-          <button mat-raised-button color="primary" type="submit">Registrar</button>
-          <a mat-button routerLink="/login">Já tem uma conta? Faça o Login</a>
-        </mat-card-actions>
+        <a mat-button routerLink="/login">Já tem uma conta? Faça o Login</a>
       </form>
     </mat-card-content>
   </mat-card>
