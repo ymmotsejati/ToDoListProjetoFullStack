@@ -18,7 +18,7 @@
 **Este projeto está em andamento.** Novas funcionalidades e refinamentos estão sendo adicionados continuamente.
 
 ### 🎥 Demonstração Rápida
-![Demonstração do App](docs/midias/todolist-v1.gif)
+![Demonstração do App](Docs/midias/todolist-v1.gif)
 
 ### ✨ Principais Funcionalidades
 * **Autenticação de Usuários:** Sistema completo de Registro e Login com segurança baseada em Tokens JWT.
@@ -40,7 +40,7 @@
 ### 📸 Telas do Projeto
 | Login | Edição | Tarefas |
 |---|---|---|
-| ![Tela de Login](docs/midias/print_login.png) | ![Tela de Registro](docs/midias/print_register.png)  | ![Tela de Tarefas](docs/midias/print_todolist.png)|
+| ![Tela de Login](Docs/midias/print_login.png) | ![Tela de Registro](Docs/midias/print_register.png)  | ![Tela de Tarefas](Docs/midias/print_todolist.png)|
 
 ### 🚀 Como Executar o Projeto (Getting Started)
 **Pré-requisitos:**
@@ -97,7 +97,7 @@ A aplicação estará acessível em `http://localhost:4200`.
 **This project is a work in progress.** New features and refinements are being added continuously.
 
 ### 🎥 Quick Demo
-![App Demo](docs/midias/todolist-v1.gif)
+![App Demo](Docs/midias/todolist-v1.gif)
 
 ### ✨ Key Features
 * **User Authentication:** Complete Register and Login system with security based on JWT (JSON Web Tokens).
@@ -119,7 +119,7 @@ A aplicação estará acessível em `http://localhost:4200`.
 ### 📸 Project Screenshots
 | Login | Tasks | Edit |
 |---|---|---|
-| ![Login Screen](docs/midias/print_login.png) | ![Register Screen](docs/midias/print_register.png)  | ![Tasks Screen](docs/midias/print_todolist.png)|
+| ![Login Screen](Docs/midias/print_login.png) | ![Register Screen](Docs/midias/print_register.png)  | ![Tasks Screen](Docs/midias/print_todolist.png)|
 ### 🚀 Getting Started
 **Prerequisites:**
 * [.NET SDK 9.0+](https://dotnet.microsoft.com/download)
