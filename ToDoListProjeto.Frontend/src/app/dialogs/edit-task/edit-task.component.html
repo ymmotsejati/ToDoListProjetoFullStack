@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>Editar Tarefa</h1>
+
+<div mat-dialog-content>
+  <form #editForm="ngForm" class="edit-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Título</mat-label>
+      <input matInput [(ngModel)]="editData.title" name="title" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Descrição</mat-label>
+      <input matInput [(ngModel)]="editData.description" name="description">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Prioridade</mat-label>
+      <mat-select [(ngModel)]="editData.priority" name="priority">
+        <mat-option value="Baixa">Baixa</mat-option>
+        <mat-option value="Média">Média</mat-option>
+        <mat-option value="Alta">Alta</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="editData.status" name="status">
+        <mat-option value="Pendente">Pendente</mat-option>
+        <mat-option value="Em Andamento">Em Andamento</mat-option>
+        <mat-option value="Concluída">Concluída</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="editForm.invalid">Salvar</button>
+</div>

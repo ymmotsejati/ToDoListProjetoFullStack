@@ -1,0 +1,123 @@
+<mat-toolbar color="primary" class="main-toolbar">
+  <span>Minhas Tarefas</span>
+  <span class="toolbar-spacer"></span>
+  <button mat-icon-button (click)="logout()" aria-label="Sair da aplicação">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+
+      <form (ngSubmit)="onAddSmartTask()" class="smart-task-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Adicionar Tarefa com IA...</mat-label>
+          <input matInput name="smartPrompt" [(ngModel)]="smartTaskPrompt" placeholder="Ex: Reunião de marketing sexta-feira prioridade alta">
+          <button mat-icon-button matSuffix type="submit" aria-label="Adicionar tarefa com IA" [disabled]="!smartTaskPrompt">
+            <mat-icon>auto_awesome</mat-icon>
+          </button>
+        </mat-form-field>
+      </form>
+      <mat-divider class="divider"></mat-divider>
+      <form (ngSubmit)="onAddTask()" #taskForm="ngForm" class="task-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Título da Tarefa</mat-label>
+          <input matInput name="title" [(ngModel)]="newTask.title" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Descrição</mat-label>
+          <input matInput name="description" [(ngModel)]="newTask.description">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Prioridade</mat-label>
+          <mat-select name="priority" [(ngModel)]="newTask.priority">
+            <mat-option value="Baixa">Baixa</mat-option>
+            <mat-option value="Média">Média</mat-option>
+            <mat-option value="Alta">Alta</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select name="status" [(ngModel)]="newTask.status">
+            <mat-option value="Pendente">Pendente</mat-option>
+            <mat-option value="Em Andamento">Em Andamento</mat-option>
+            <mat-option value="Concluída">Concluída</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="taskForm.invalid">
+          Adicionar Tarefa
+        </button>
+      </form>
+
+      <mat-divider class="divider"></mat-divider>
+
+      <div *ngIf="isLoading">
+        <p>Carregando tarefas...</p>
+      </div>
+
+      <div *ngIf="!isLoading && pendingTasks.length > 0">
+        <h3>Pendentes</h3>
+        <mat-list>
+          <mat-list-item *ngFor="let task of pendingTasks" class="task-item">
+            <div class="task-info">
+              <div matListItemTitle>{{ task.title }}</div>
+              <div matListItemLine>{{ task.description }}</div>
+            </div>
+            <div class="task-chips" matListItemMeta>
+              <mat-chip-listbox>
+                <mat-chip class="status-chip" (click)="toggleTaskStatus(task)" [ngClass]="{ 'status-pendente': task.status !== 'Concluída', 'status-concluida': task.status === 'Concluída' }">
+                  {{ task.status }}
+                </mat-chip>
+              </mat-chip-listbox>
+              <mat-chip-listbox>
+                <mat-chip [ngClass]="{ 'priority-baixa': task.priority === 'Baixa', 'priority-media': task.priority === 'Média', 'priority-alta': task.priority === 'Alta' }">
+                  {{ task.priority }}
+                </mat-chip>
+              </mat-chip-listbox>
+              <button mat-icon-button (click)="openEditDialog(task)" aria-label="Editar tarefa">
+  <mat-icon>edit</mat-icon>
+</button>
+              <button mat-icon-button color="warn" (click)="onDeleteTask(task.id, tasks.indexOf(task))" aria-label="Excluir tarefa">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+      <div *ngIf="!isLoading && completedTasks.length > 0">
+        <mat-divider class="divider"></mat-divider>
+        <h3>Concluídas</h3>
+        <mat-list>
+          <mat-list-item *ngFor="let task of completedTasks" class="task-item completed">
+            <div class="task-info">
+              <div matListItemTitle>{{ task.title }}</div>
+              <div matListItemLine>{{ task.description }}</div>
+            </div>
+            <div class="task-chips" matListItemMeta>
+              <mat-chip-listbox>
+                <mat-chip class="status-chip" (click)="toggleTaskStatus(task)" [ngClass]="{ 'status-pendente': task.status !== 'Concluída', 'status-concluida': task.status === 'Concluída' }">
+                  {{ task.status }}
+                </mat-chip>
+              </mat-chip-listbox>
+              <mat-chip-listbox>
+                <mat-chip [ngClass]="{ 'priority-baixa': task.priority === 'Baixa', 'priority-media': task.priority === 'Média', 'priority-alta': task.priority === 'Alta' }">
+                  {{ task.priority }}
+                </mat-chip>
+              </mat-chip-listbox>
+              <button mat-icon-button color="warn" (click)="onDeleteTask(task.id, tasks.indexOf(task))" aria-label="Excluir tarefa">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+      <div *ngIf="!isLoading && tasks.length === 0">
+        <p>Nenhuma tarefa encontrada. Que tal adicionar uma nova?</p>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>
